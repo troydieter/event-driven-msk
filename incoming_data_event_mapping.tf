@@ -14,7 +14,7 @@ resource "aws_lambda_event_source_mapping" "sqs_processor_lambda_event_mapping" 
 resource "aws_lambda_permission" "allow_sqs_invoke" {
   statement_id  = "AllowExecutionFromSQS"
   action        = "lambda:InvokeFunction"
-  function_name = "incoming_data-processor-${random_id.rando.hex}"
+  function_name = "incoming_data-processor-${var.environment}-${random_id.rando.hex}"
   principal     = "sqs.amazonaws.com"
   source_arn    = module.sqs_encrypted_incoming_data.sqs_queue_arn
   depends_on = [
