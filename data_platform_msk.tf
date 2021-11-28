@@ -186,7 +186,7 @@ resource "aws_security_group_rule" "node_exporter" {
 
 resource "aws_msk_configuration" "data_platform" {
   kafka_versions    = [var.kafka_version]
-  name              = "data_platform_config-${random_integer.rando_int.result}"
+  name              = "data_platform_config-${var.environment}"
   server_properties = local.server_properties
 
   lifecycle {
