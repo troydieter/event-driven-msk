@@ -23,6 +23,17 @@ module "data_platform_lambda_function" {
               "${aws_msk_cluster.data_platform.arn}",
               "${aws_msk_cluster.data_platform.arn}/*"
               ]
+        },
+                {
+            "Effect": "Allow",
+            "Action": [
+              "SQS:Receive*",
+              "SQS:Send*"
+            ],
+            "Resource": [
+              "${module.sqs_encrypted_data_enrichment.sqs_queue_arn}",
+              "${module.sqs_encrypted_data_enrichment.sqs_queue_arn}/*"
+              ]
         }
     ]
 }
