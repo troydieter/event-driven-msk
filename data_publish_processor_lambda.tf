@@ -8,7 +8,7 @@ module "data_publish_lambda_function" {
   handler       = "index.handler"
   runtime       = "python3.8"
 
-  source_path = "./src/sqs-processor-lambda"
+  source_path = "./src/data-publish-processor-lambda"
 
   tags = {
     "project"     = "${lower("${var.aws-profile}")}-event-driven-msk"
