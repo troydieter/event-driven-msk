@@ -8,7 +8,7 @@ locals {
 variable "cluster_name" {
   description = "Name of the MSK cluster."
   type        = string
-  default     = "data_platform"
+  default     = "data-platform"
 }
 
 variable "kafka_version" {
@@ -186,7 +186,7 @@ resource "aws_security_group_rule" "node_exporter" {
 
 resource "aws_msk_configuration" "data_platform" {
   kafka_versions    = [var.kafka_version]
-  name              = "${var.cluster_name}${var.environment}${random_id.rando.hex}config"
+  name              = "${var.cluster_name}-${var.environment}-${random_id.rando.hex}"
   server_properties = local.server_properties
 
   lifecycle {
@@ -198,7 +198,7 @@ resource "aws_msk_configuration" "data_platform" {
 resource "aws_msk_cluster" "data_platform" {
   depends_on = [aws_msk_configuration.data_platform]
 
-  cluster_name           = "${var.cluster_name}${var.environment}${random_id.rando.hex}cluster"
+  cluster_name           = "${var.cluster_name}-${var.environment}-${random_id.rando.hex}"
   kafka_version          = var.kafka_version
   number_of_broker_nodes = var.number_of_nodes
   enhanced_monitoring    = var.enhanced_monitoring
