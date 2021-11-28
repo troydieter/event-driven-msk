@@ -186,7 +186,7 @@ resource "aws_security_group_rule" "node_exporter" {
 
 resource "aws_msk_configuration" "data_platform" {
   kafka_versions    = [var.kafka_version]
-  name              = "data_platform_config-${var.environment}"
+  name              = "data_platform_config_${var.environment}_${random_id.rando.hex}"
   server_properties = local.server_properties
 
   lifecycle {
@@ -198,7 +198,7 @@ resource "aws_msk_configuration" "data_platform" {
 resource "aws_msk_cluster" "data_platform" {
   depends_on = [aws_msk_configuration.data_platform]
 
-  cluster_name           = var.cluster_name
+  cluster_name           = "${var.cluster_name}_${var.environment}_${random_id.rando.hex}"
   kafka_version          = var.kafka_version
   number_of_broker_nodes = var.number_of_nodes
   enhanced_monitoring    = var.enhanced_monitoring
