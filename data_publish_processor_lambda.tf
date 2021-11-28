@@ -9,6 +9,25 @@ module "data_publish_lambda_function" {
   runtime       = "python3.8"
 
   source_path = "./src/data-publish-processor-lambda"
+    attach_policy_json = true
+  policy_json        = <<EOF
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Effect": "Allow",
+            "Action": [
+              "sqs:ReceiveMessage",
+              "sqs:DeleteMessage",
+              "sqs:GetQueueAttributes"
+            ],
+            "Resource": [
+              "${module.sqs_encrypted_data_enrichment.sqs_queue_arn}"
+              ]
+        }
+    ]
+}
+EOF
 
   tags = {
     "project"     = "${lower("${var.aws-profile}")}-event-driven-msk"
