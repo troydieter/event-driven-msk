@@ -20,6 +20,7 @@ variable "kafka_version" {
 variable "number_of_nodes" {
   description = "The desired total number of broker nodes in the kafka cluster. It must be a multiple of the number of specified client subnets."
   type        = number
+  default     = 3
 }
 
 variable "client_subnets" {
@@ -184,13 +185,20 @@ resource "aws_security_group_rule" "node_exporter" {
 }
 
 resource "aws_msk_configuration" "data_platform" {
-  kafka_versions    = [random_id.rando.keepers.kafka_version]
-  name              = "data_platform_config-${random_id.rando.hex}"
-  server_properties = random_id.rando.keepers.server_properties
+  kafka_versions    = [var.kafka_version]
+  name              = "data_platform_config-${random_integer.random_int.result}"
+  server_properties = local.server_properties
 
   lifecycle {
     create_before_destroy = true
   }
+
+  tags = {
+    "project"     = "${lower("${var.aws-profile}")}-event-driven-msk"
+    "environment" = var.environment
+    "id"          = random_id.rando.hex
+  }
+
 }
 
 resource "aws_msk_cluster" "data_platform" {

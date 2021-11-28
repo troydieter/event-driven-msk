@@ -12,3 +12,8 @@ data "aws_caller_identity" "current" {}
 resource "random_id" "rando" {
   byte_length = 2
 }
+
+resource "random_integer" "rando_int" {
+  min = 1
+  max = 100
+}
