@@ -1,5 +1,5 @@
 name: Run Terrascan
-on: [workflow_dispatch]
+on: [push, pull_request, workflow_dispatch]
 
 jobs:
   terrascan_job:
