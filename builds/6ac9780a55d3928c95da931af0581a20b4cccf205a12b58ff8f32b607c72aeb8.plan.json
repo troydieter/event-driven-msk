@@ -1,1 +1,0 @@
-{"filename": "builds/6ac9780a55d3928c95da931af0581a20b4cccf205a12b58ff8f32b607c72aeb8.zip", "runtime": "python3.7", "artifacts_dir": "builds", "build_plan": [["pip", "python3.7", "./src/sns-processor-lambda/requirements.txt", null], ["zip", "./src/sns-processor-lambda", null]]}
