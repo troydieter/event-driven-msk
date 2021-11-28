@@ -3,8 +3,8 @@ import xlwt
 import json
 import os.path
 import datetime
-# import boto3
-# import requests
+import boto3
+import requests
 
 def getColNames(sheet):
 	rowSize = sheet.row_len(0)
