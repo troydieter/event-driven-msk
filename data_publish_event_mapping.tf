@@ -6,14 +6,3 @@ resource "aws_lambda_event_source_mapping" "data_publish_event_mapping" {
   topics            = var.platform_topic
   starting_position = "LATEST"
 }
-
-resource "aws_lambda_permission" "allow_msk_invoke" {
-  statement_id  = "AllowExecutionFromMSK"
-  action        = "lambda:InvokeFunction"
-  function_name = "data_publish-processor-${var.environment}-${random_id.rando.hex}"
-  principal     = "msk.amazonaws.com"
-  source_arn    = module.data_publish_lambda_function.lambda_function_arn
-  depends_on = [
-    module.data_publish_lambda_function
-  ]
-}

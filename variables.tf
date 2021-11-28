@@ -17,6 +17,6 @@ variable "environment" {
 
 variable "platform_topic" {
   description = "Topics to subscribe to"
-  type = list
-  default = ["test"]
+  type        = list(any)
+  default     = ["test"]
 }
