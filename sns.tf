@@ -1,6 +1,13 @@
 # Provisions the inbound data Amazon SNS Topic
 
-resource "aws_kms_key" "sns_kms_key" {}
+resource "aws_kms_key" "sns_kms_key" {
+    description = "Incoming data encryption key"
+    tags = {
+    "project"     = "${lower("${var.aws-profile}")}-event-driven-msk"
+    "environment" = var.environment
+    "id" = random_id.rando.hex
+  }
+}
 
 module "sns_encrypted_incoming_data" {
   source = "terraform-aws-modules/sns/aws"
@@ -8,6 +15,8 @@ module "sns_encrypted_incoming_data" {
   name_prefix       = "incoming-data-${random_id.rando.hex}-"
   display_name      = "incoming-data-${random_id.rando.hex}"
   kms_master_key_id = aws_kms_key.sns_kms_key.id
+  fifo_topic = true
+  content_based_deduplication = true
 
   tags = {
     "project"     = "${lower("${var.aws-profile}")}-event-driven-msk"
