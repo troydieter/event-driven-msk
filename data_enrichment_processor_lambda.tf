@@ -8,8 +8,8 @@ module "data_platform_lambda_function" {
   handler       = "index.handler"
   runtime       = "python3.8"
 
-  source_path = "./src/msk-processor-lambda"
-    attach_policy_json = true
+  source_path        = "./src/msk-processor-lambda"
+  attach_policy_json = true
   policy_json        = <<EOF
 {
     "Version": "2012-10-17",
