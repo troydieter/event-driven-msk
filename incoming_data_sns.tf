@@ -18,8 +18,8 @@ module "sns_encrypted_incoming_data" {
   ############################################################
   # Lambda subscriptions to SNS topics only supports standard topics, not FIFO yet
   # fifo_topic = true
+  # content_based_deduplication = true
   ############################################################
-  content_based_deduplication = true
 
   tags = {
     "project"     = "${lower("${var.aws-profile}")}-event-driven-msk"
