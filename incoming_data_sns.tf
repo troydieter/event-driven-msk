@@ -15,7 +15,10 @@ module "sns_encrypted_incoming_data" {
   name_prefix       = "incoming-data-${random_id.rando.hex}-"
   display_name      = "incoming-data-${random_id.rando.hex}"
   kms_master_key_id = aws_kms_key.sns_kms_key.id
-  fifo_topic = true
+  ############################################################
+  # Lambda subscriptions to SNS topics only supports standard topics, not FIFO yet
+  # fifo_topic = true
+  ############################################################
   content_based_deduplication = true
 
   tags = {
