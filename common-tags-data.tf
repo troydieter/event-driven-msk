@@ -1,9 +1,14 @@
 locals {
   common-tags = {
-    "project"     = "${upper("${substr("${var.aws-profile}", 0, 3)}")}-event-driven-msk"
+    "project"     = "${lower("${var.aws-profile}")}-event-driven-msk"
     "environment" = var.environment
+    "id" = random_id.rando.hex
   }
 }
 
 
 data "aws_caller_identity" "current" {}
+
+resource "random_id" "rando" {
+  byte_length = 2
+}

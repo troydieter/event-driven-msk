@@ -5,12 +5,13 @@ resource "aws_kms_key" "sns_kms_key" {}
 module "sns_encrypted_incoming_data" {
   source = "terraform-aws-modules/sns/aws"
 
-  name_prefix       = "incoming-data-"
-  display_name      = "incoming-data"
+  name_prefix       = "incoming-data-${random_id.rando.hex}-"
+  display_name      = "incoming-data-${random_id.rando.hex}"
   kms_master_key_id = aws_kms_key.sns_kms_key.id
 
   tags = {
-    "project"     = "${upper("${substr("${var.aws-profile}", 0, 3)}")}-event-driven-msk"
+    "project"     = "${lower("${var.aws-profile}")}-event-driven-msk"
     "environment" = var.environment
+    "id" = random_id.rando.hex
   }
 }
