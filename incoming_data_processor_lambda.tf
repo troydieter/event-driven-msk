@@ -10,10 +10,30 @@ module "incoming_data_lambda_function" {
 
   source_path = "./src/sns-processor-lambda"
 
+  attach_policy_json = true
+  policy_json        = <<EOF
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Effect": "Allow",
+            "Action": [
+              "sqs:ReceiveMessage",
+              "sqs:DeleteMessage",
+              "sqs:GetQueueAttributes"
+            ],
+            "Resource": [
+              "${module.sqs_encrypted_incoming_data.sqs_queue_arn}"
+              ]
+        }
+    ]
+}
+EOF
+
   tags = {
     "project"     = "${lower("${var.aws-profile}")}-event-driven-msk"
     "environment" = var.environment
-    "id" = random_id.rando.hex
+    "id"          = random_id.rando.hex
   }
 
 }

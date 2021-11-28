@@ -2,7 +2,7 @@ locals {
   common-tags = {
     "project"     = "${lower("${var.aws-profile}")}-event-driven-msk"
     "environment" = var.environment
-    "id" = random_id.rando.hex
+    "id"          = random_id.rando.hex
   }
 }
 
