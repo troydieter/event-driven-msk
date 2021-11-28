@@ -6,7 +6,7 @@ module "lambda_function" {
   function_name = "sns-processor-${random_id.rando.hex}"
   description   = "Subscribes to the incoming data SNS topic and processes it"
   handler       = "index.handler"
-  runtime       = "python3.7"
+  runtime       = "python3.8"
 
   source_path = "./src/sns-processor-lambda"
 
