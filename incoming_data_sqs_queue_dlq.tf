@@ -1,16 +1,9 @@
-module "sqs_encrypted_incoming_data" {
+module "sqs_encrypted_incoming_data_dlq" {
   source = "terraform-aws-modules/sqs/aws"
 
-  name_prefix = "incoming-data-sqs-${random_id.rando.hex}-"
+  name_prefix = "incoming-data-sqs-dlq-${random_id.rando.hex}-"
 
   kms_master_key_id           = aws_kms_key.incoming_data_kms_key.id
-
-  redrive_policy = <<EOF
-  {
-      "maxReceiveCount": 3,
-      "deadLetterTargetArn": "${aws_sqs_queue.sqs_encrypted_incoming_data_dlq.arn}"
-  }
-  EOF
 
   tags = {
     "project"     = "${lower("${var.aws-profile}")}-event-driven-msk"
