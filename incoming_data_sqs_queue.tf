@@ -8,7 +8,7 @@ module "sqs_encrypted_incoming_data" {
   redrive_policy = <<EOF
   {
       "maxReceiveCount": 3,
-      "deadLetterTargetArn": "${aws_sqs_queue.sqs_encrypted_incoming_data_dlq.arn}"
+      "deadLetterTargetArn": "${module.sqs_encrypted_incoming_data_dlq.sqs_queue_arn}"
   }
   EOF
 
