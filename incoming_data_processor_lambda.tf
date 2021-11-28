@@ -8,7 +8,7 @@ module "incoming_data_lambda_function" {
   handler       = "index.handler"
   runtime       = "python3.8"
 
-  source_path = "./src/sns-processor-lambda"
+  source_path = "./src/incoming-data-processor-lambda"
 
   attach_policy_json = true
   policy_json        = <<EOF
