@@ -1,6 +1,6 @@
 # Provisions the Lambda function to handle SNS subscription
 
-module "lambda_function" {
+module "incoming_data_lambda_function" {
   source = "terraform-aws-modules/lambda/aws"
 
   function_name = "incoming_data-processor-${random_id.rando.hex}"
