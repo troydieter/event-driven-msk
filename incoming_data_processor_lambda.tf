@@ -38,7 +38,7 @@ EOF
 
   environment_variables = {
     KAFKA_BROKER = aws_msk_cluster.data_platform.bootstrap_brokers_sasl_iam
-    KAFKA_TOPIC = "test"
+    KAFKA_TOPIC  = "test"
   }
 
   depends_on = [
