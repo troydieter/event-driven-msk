@@ -6,7 +6,7 @@ module "vpc" {
   name = "msk-vpc"
   cidr = "172.16.16.0/20"
 
-  azs             = ["us-east-1a", "us-east-1b", "us-east-1c"]
+  azs             = ["${var.aws_region}a", "${var.aws_region}b", "${var.aws_region}c"]
   private_subnets = ["172.16.16.0/25", "172.16.17.0/25", "172.16.18.0/25"]
   public_subnets  = ["172.16.16.128/25", "172.16.17.128/25", "172.16.18.128/25"]
 
