@@ -100,17 +100,11 @@ variable "firehose_logs_delivery_stream" {
   default     = ""
 }
 
-# Data
-
-data "aws_subnet" "data_platform_subnets" {
-  id = var.client_subnets[0]
-}
-
 # Resources
 
 resource "aws_security_group" "data_platform" {
   name_prefix = "${var.cluster_name}-${random_id.rando.hex}"
-  vpc_id      = data.aws_subnet.data_platform_subnets.vpc_id
+  vpc_id      = moduele.vpc.vpc_id
 }
 
 resource "aws_security_group_rule" "msk-plain" {
