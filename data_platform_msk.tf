@@ -104,7 +104,7 @@ variable "firehose_logs_delivery_stream" {
 
 resource "aws_security_group" "data_platform" {
   name_prefix = "${var.cluster_name}-${random_id.rando.hex}"
-  vpc_id      = moduele.vpc.vpc_id
+  vpc_id      = module.vpc.vpc_id
 }
 
 resource "aws_security_group_rule" "msk-plain" {
