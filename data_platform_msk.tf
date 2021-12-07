@@ -140,7 +140,7 @@ resource "aws_msk_cluster" "data_platform" {
     broker_logs {
       cloudwatch_logs {
         enabled   = true
-        log_group = "${var.cluster_name}-${var.environment}-${random_id.rando.hex}"
+        log_group = aws_cloudwatch_log_group.msk-cw-loggroup.cloudwatch_log_group_name
       }
       s3 {
         enabled = true

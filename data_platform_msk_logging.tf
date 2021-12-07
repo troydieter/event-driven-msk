@@ -17,3 +17,7 @@ module "s3_bucket" {
   }
 
 }
+
+resource "aws_cloudwatch_log_group" "msk-cw-loggroup" {
+  name = "${var.cluster_name}-${var.environment}-${random_id.rando.hex}"
+}
