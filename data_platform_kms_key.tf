@@ -1,9 +1,9 @@
 # Provisions the KMS key for MSK CloudWatch data
 
 resource "aws_kms_key" "data_platform_kms_key" {
-  description = "${random_id.rando.hex}-data_platform_kms_key"
+  description         = "${random_id.rando.hex}-data_platform_kms_key"
   enable_key_rotation = true
-  policy = <<EOF
+  policy              = <<EOF
 {
   "Version" : "2012-10-17",
   "Id" : "${random_id.rando.hex}-data_platform_kms_key",
@@ -31,5 +31,5 @@ resource "aws_kms_key" "data_platform_kms_key" {
   ]
 }
 EOF
-  tags        = local.common-tags
+  tags                = local.common-tags
 }

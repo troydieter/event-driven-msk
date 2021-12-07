@@ -1,12 +1,12 @@
 # Provisions the KMS key for incoming data
 
-resource "aws_kms_key" "incoming_data_kms_key" {
-  description         = "Incoming data encryption key"
+resource "aws_kms_key" "data_publish_processor_kms_key" {
+  description         = "Data publishing processor encryption key"
   enable_key_rotation = true
   policy              = <<EOF
 {
   "Version" : "2012-10-17",
-  "Id" : "${random_id.rando.hex}-incoming_data_kms_key",
+  "Id" : "${random_id.rando.hex}-data_publish_processor_kms_key",
   "Statement" : [ {
       "Sid" : "Enable IAM User Permissions",
       "Effect" : "Allow",

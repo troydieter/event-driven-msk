@@ -1,9 +1,9 @@
 # Provisions the KMS key for data enrichment
 
 resource "aws_kms_key" "data_enrichment_kms_key" {
-  description = "Data enrichment encryption key"
+  description         = "Data enrichment encryption key"
   enable_key_rotation = true
-  policy = <<EOF
+  policy              = <<EOF
 {
   "Version" : "2012-10-17",
   "Id" : "${random_id.rando.hex}-data_enrichment_kms_key",
@@ -31,5 +31,5 @@ resource "aws_kms_key" "data_enrichment_kms_key" {
   ]
 }
 EOF
-  tags        = local.common-tags
+  tags                = local.common-tags
 }

@@ -34,6 +34,19 @@ module "data_platform_lambda_function" {
               "${module.sqs_encrypted_data_enrichment.sqs_queue_arn}",
               "${module.sqs_encrypted_data_enrichment.sqs_queue_arn}/*"
               ]
+        },
+                        {
+            "Effect": "Allow",
+            "Action": [ 
+        "kms:Encrypt*",
+        "kms:Decrypt*",
+        "kms:ReEncrypt*",
+        "kms:GenerateDataKey*",
+        "kms:Describe*"
+      ],
+            "Resource": [
+              "${aws_kms_key.data_enrichment_kms_key.id}"
+              ]
         }
     ]
 }

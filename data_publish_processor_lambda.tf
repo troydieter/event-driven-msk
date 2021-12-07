@@ -24,6 +24,19 @@ module "data_publish_lambda_function" {
             "Resource": [
               "${module.sqs_encrypted_data_enrichment.sqs_queue_arn}"
               ]
+        },
+                        {
+            "Effect": "Allow",
+            "Action": [ 
+        "kms:Encrypt*",
+        "kms:Decrypt*",
+        "kms:ReEncrypt*",
+        "kms:GenerateDataKey*",
+        "kms:Describe*"
+      ],
+            "Resource": [
+              "${aws_kms_key.data_publish_processor_kms_key.id}"
+              ]
         }
     ]
 }

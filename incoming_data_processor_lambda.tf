@@ -25,6 +25,19 @@ module "incoming_data_lambda_function" {
             "Resource": [
               "${module.sqs_encrypted_incoming_data.sqs_queue_arn}"
               ]
+        },
+                {
+            "Effect": "Allow",
+            "Action": [ 
+        "kms:Encrypt*",
+        "kms:Decrypt*",
+        "kms:ReEncrypt*",
+        "kms:GenerateDataKey*",
+        "kms:Describe*"
+      ],
+            "Resource": [
+              "${aws_kms_key.incoming_data_kms_key.id}"
+              ]
         }
     ]
 }

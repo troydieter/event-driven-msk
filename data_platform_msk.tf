@@ -6,7 +6,7 @@ resource "aws_security_group" "data_platform" {
 }
 
 resource "aws_security_group_rule" "msk-plain" {
-  description = "${var.cluster_name}-${var.environment}-${random_id.rando.hex}-msk-plain"
+  description       = "${var.cluster_name}-${var.environment}-${random_id.rando.hex}-msk-plain"
   from_port         = 9092
   to_port           = 9092
   protocol          = "tcp"
@@ -16,7 +16,7 @@ resource "aws_security_group_rule" "msk-plain" {
 }
 
 resource "aws_security_group_rule" "msk-tls" {
-  description = "${var.cluster_name}-${var.environment}-${random_id.rando.hex}-msk-tls"
+  description       = "${var.cluster_name}-${var.environment}-${random_id.rando.hex}-msk-tls"
   from_port         = 9094
   to_port           = 9094
   protocol          = "tcp"
@@ -26,7 +26,7 @@ resource "aws_security_group_rule" "msk-tls" {
 }
 
 resource "aws_security_group_rule" "msk-iam" {
-  description = "${var.cluster_name}-${var.environment}-${random_id.rando.hex}-msk-iam"
+  description       = "${var.cluster_name}-${var.environment}-${random_id.rando.hex}-msk-iam"
   from_port         = 9098
   to_port           = 9098
   protocol          = "tcp"
@@ -36,7 +36,7 @@ resource "aws_security_group_rule" "msk-iam" {
 }
 
 resource "aws_security_group_rule" "zookeeper-plain" {
-  description = "${var.cluster_name}-${var.environment}-${random_id.rando.hex}-zookeeper-plain"
+  description       = "${var.cluster_name}-${var.environment}-${random_id.rando.hex}-zookeeper-plain"
   from_port         = 2181
   to_port           = 2181
   protocol          = "tcp"
@@ -46,7 +46,7 @@ resource "aws_security_group_rule" "zookeeper-plain" {
 }
 
 resource "aws_security_group_rule" "zookeeper-tls" {
-  description = "${var.cluster_name}-${var.environment}-${random_id.rando.hex}-zookeeper-tls"
+  description       = "${var.cluster_name}-${var.environment}-${random_id.rando.hex}-zookeeper-tls"
   from_port         = 2182
   to_port           = 2182
   protocol          = "tcp"
