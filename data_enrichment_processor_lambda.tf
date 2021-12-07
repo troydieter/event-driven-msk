@@ -45,7 +45,7 @@ module "data_platform_lambda_function" {
         "kms:Describe*"
       ],
             "Resource": [
-              "${aws_kms_key.data_enrichment_kms_key.id}"
+              "${aws_kms_key.data_enrichment_kms_key.arn}"
               ]
         }
     ]

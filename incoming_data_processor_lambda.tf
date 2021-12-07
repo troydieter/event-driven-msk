@@ -36,7 +36,7 @@ module "incoming_data_lambda_function" {
         "kms:Describe*"
       ],
             "Resource": [
-              "${aws_kms_key.incoming_data_kms_key.id}"
+              "${aws_kms_key.incoming_data_kms_key.arn}"
               ]
         }
     ]

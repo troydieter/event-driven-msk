@@ -35,7 +35,7 @@ module "data_publish_lambda_function" {
         "kms:Describe*"
       ],
             "Resource": [
-              "${aws_kms_key.data_publish_processor_kms_key.id}"
+              "${aws_kms_key.data_publish_processor_kms_key.arn}"
               ]
         }
     ]
