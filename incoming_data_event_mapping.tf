@@ -25,7 +25,7 @@ resource "aws_lambda_permission" "allow_sqs_invoke" {
 # IAM Policies for Lambda execution against MSK
 
 data "aws_iam_policy" "iam_msk_lambda_access" {
-  arn = "arn:aws:iam::aws:policy/AWSLambdaMSKExecutionRole"
+  arn = "arn:aws:iam::aws:policy/service-role/AWSLambdaMSKExecutionRole"
 }
 
 resource "aws_iam_role_policy_attachment" "iam_msk_lambda_access-policy-attach" {
