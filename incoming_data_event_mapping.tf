@@ -3,7 +3,7 @@
 resource "aws_sns_topic_subscription" "sns_processor_sub" {
   topic_arn = module.sns_encrypted_incoming_data.sns_topic_arn
   protocol  = "sqs"
-  endpoint  = module.incoming_data_lambda_function.lambda_function_arn
+  endpoint  = module.sqs_encrypted_incoming_data.sqs_queue_arn
 }
 
 resource "aws_lambda_event_source_mapping" "sqs_processor_lambda_event_mapping" {
