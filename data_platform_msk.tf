@@ -3,6 +3,7 @@
 resource "aws_security_group" "data_platform" {
   name_prefix = "${var.cluster_name}-${random_id.rando.hex}"
   vpc_id      = module.vpc.vpc_id
+  description       = "${var.cluster_name}-${var.environment}-${random_id.rando.hex}-sg"
 }
 
 resource "aws_security_group_rule" "msk-plain" {
