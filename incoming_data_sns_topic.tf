@@ -6,6 +6,7 @@ module "sns_encrypted_incoming_data" {
   name_prefix                 = "incoming-data-sns-${random_id.rando.hex}-"
   display_name                = "incoming-data-sns-${random_id.rando.hex}"
   kms_master_key_id           = aws_kms_key.incoming_data_kms_key.id
-
-  tags = local.common-tags
+  fifo_topic                  = true
+  content_based_deduplication = true
+  tags                        = local.common-tags
 }
