@@ -22,12 +22,6 @@ variable "number_of_nodes" {
   default     = 3
 }
 
-variable "client_subnets" {
-  description = "A list of subnets to connect to in client VPC"
-  type        = list(string)
-  default     = ["subnet-07350c44836266baf", "subnet-0c86b986978390648", "subnet-03e97e0882eae5d8c"]
-}
-
 variable "volume_size" {
   description = "The size in GiB of the EBS volume for the data drive on each broker node."
   type        = number
@@ -192,7 +186,10 @@ PROPERTIES
 }
 
 resource "aws_msk_cluster" "data_platform" {
-  depends_on = [aws_msk_configuration.data_platform]
+  depends_on = [
+    aws_msk_configuration.data_platform,
+    module.vpc
+    ]
 
   cluster_name           = "${var.cluster_name}-${var.environment}-${random_id.rando.hex}"
   kafka_version          = var.kafka_version
@@ -200,7 +197,7 @@ resource "aws_msk_cluster" "data_platform" {
   enhanced_monitoring    = var.enhanced_monitoring
 
   broker_node_group_info {
-    client_subnets  = var.client_subnets
+    client_subnets  = module.vpc.public_subnets
     ebs_volume_size = var.volume_size
     instance_type   = var.instance_type
     security_groups = concat(aws_security_group.data_platform.*.id, var.extra_security_groups)

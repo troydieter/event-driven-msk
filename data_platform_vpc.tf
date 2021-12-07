@@ -1,0 +1,21 @@
+# Provisions the VPC for MSK
+
+module "vpc" {
+  source = "terraform-aws-modules/vpc/aws"
+
+  name = "msk-vpc"
+  cidr = "172.16.16.0/20"
+
+  azs             = ["us-east-1a", "us-east-1b", "us-east-1c"]
+  private_subnets = ["172.16.16.0/25", "172.16.17.0/25", "172.16.18.0/25"]
+  public_subnets  = ["172.16.16.128/25", "172.16.17.128/25", "172.16.18.128/25"]
+
+  enable_nat_gateway = true
+  enable_vpn_gateway = true
+
+  tags = {
+    "project"     = "${lower("${var.aws-profile}")}-event-driven-msk"
+    "environment" = var.environment
+    "id"          = random_id.rando.hex
+  }
+}
