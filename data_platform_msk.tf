@@ -186,6 +186,7 @@ resource "aws_msk_cluster" "data_platform" {
     ]
 
   cluster_name           = "${var.cluster_name}-${var.environment}-${random_id.rando.hex}"
+  description            = "MSK platform deployment for ${lower("${var.aws-profile}")}-event-driven-msk-${random_id.rando.hex}"
   kafka_version          = var.kafka_version
   number_of_broker_nodes = var.number_of_nodes
   enhanced_monitoring    = var.enhanced_monitoring
@@ -204,7 +205,7 @@ resource "aws_msk_cluster" "data_platform" {
 
   client_authentication {
     sasl {
-      iam = True
+      iam = true
     }
   }
 
