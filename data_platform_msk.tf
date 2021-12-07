@@ -151,9 +151,5 @@ resource "aws_msk_cluster" "data_platform" {
 
   }
 
-  tags = {
-    "project"     = "${lower("${var.aws-profile}")}-event-driven-msk"
-    "environment" = var.environment
-    "id"          = random_id.rando.hex
-  }
+  tags = local.common-tags
 }
