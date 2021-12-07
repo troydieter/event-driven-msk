@@ -93,7 +93,7 @@ variable "encryption_in_transit_client_broker" {
 variable "encryption_in_transit_in_cluster" {
   description = "Whether data communication among broker nodes is encrypted. Default value: true."
   type        = bool
-  default     = true
+  default     = false
 }
 
 variable "s3_logs_bucket" {
