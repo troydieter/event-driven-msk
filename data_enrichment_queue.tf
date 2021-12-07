@@ -12,7 +12,7 @@ module "sqs_encrypted_data_enrichment" {
   redrive_policy = <<EOF
   {
       "maxReceiveCount": 3,
-      "deadLetterTargetArn": "${module.sqs_encrypted_incoming_data_dlq.sqs_queue_arn}"
+      "deadLetterTargetArn": "${module.sqs_encrypted_data_enrichment_dlq.sqs_queue_arn}"
   }
   EOF
 
