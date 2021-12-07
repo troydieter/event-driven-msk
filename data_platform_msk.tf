@@ -1,8 +1,3 @@
-# Locals
-locals {
-  enable_logs = var.s3_logs_bucket != "" || var.cloudwatch_logs_group != "" || var.firehose_logs_delivery_stream != "" ? ["true"] : []
-}
-
 # Resources
 
 resource "aws_security_group" "data_platform" {
@@ -22,6 +17,15 @@ resource "aws_security_group_rule" "msk-plain" {
 resource "aws_security_group_rule" "msk-tls" {
   from_port         = 9094
   to_port           = 9094
+  protocol          = "tcp"
+  security_group_id = aws_security_group.data_platform.id
+  type              = "ingress"
+  self              = true
+}
+
+resource "aws_security_group_rule" "msk-iam" {
+  from_port         = 9098
+  to_port           = 9098
   protocol          = "tcp"
   security_group_id = aws_security_group.data_platform.id
   type              = "ingress"
@@ -106,12 +110,11 @@ resource "aws_msk_cluster" "data_platform" {
     revision = aws_msk_configuration.data_platform.latest_revision
   }
 
-  # Broken for now
-  # client_authentication {
-  #   sasl {
-  #     iam = true
-  #   }
-  # }
+  client_authentication {
+    sasl {
+      iam = true
+    }
+  }
 
   encryption_info {
     encryption_at_rest_kms_key_arn = var.encryption_at_rest_kms_key_arn
@@ -133,34 +136,19 @@ resource "aws_msk_cluster" "data_platform" {
     }
   }
 
-  dynamic "logging_info" {
-    for_each = local.enable_logs
-    content {
-      broker_logs {
-        dynamic "firehose" {
-          for_each = var.firehose_logs_delivery_stream != "" ? ["true"] : []
-          content {
-            enabled         = true
-            delivery_stream = var.firehose_logs_delivery_stream
-          }
-        }
-        dynamic "cloudwatch_logs" {
-          for_each = var.cloudwatch_logs_group != "" ? ["true"] : []
-          content {
-            enabled   = true
-            log_group = var.cloudwatch_logs_group
-          }
-        }
-        dynamic "s3" {
-          for_each = var.s3_logs_bucket != "" ? ["true"] : []
-          content {
-            enabled = true
-            bucket  = var.s3_logs_bucket
-            prefix  = var.s3_logs_prefix
-          }
-        }
+  logging_info {
+    broker_logs {
+      cloudwatch_logs {
+        enabled   = true
+        log_group = "${var.cluster_name}-${var.environment}-${random_id.rando.hex}"
+      }
+      s3 {
+        enabled = true
+        bucket  = module.s3_bucket.s3_bucket_id
+        prefix  = "${var.cluster_name}-${var.environment}-${random_id.rando.hex}"
       }
     }
+
   }
 
   tags = {

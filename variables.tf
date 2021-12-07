@@ -93,19 +93,7 @@ variable "encryption_in_transit_client_broker" {
 variable "encryption_in_transit_in_cluster" {
   description = "Whether data communication among broker nodes is encrypted. Default value: true."
   type        = bool
-  default     = false
-}
-
-variable "s3_logs_bucket" {
-  description = "Name of the S3 bucket to deliver logs to."
-  type        = string
-  default     = ""
-}
-
-variable "s3_logs_prefix" {
-  description = "Prefix to append to the folder name."
-  type        = string
-  default     = ""
+  default     = true
 }
 
 variable "cloudwatch_logs_group" {
