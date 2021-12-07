@@ -29,6 +29,6 @@ data "aws_iam_policy" "iam_msk_lambda_access" {
 }
 
 resource "aws_iam_role_policy_attachment" "iam_msk_lambda_access-policy-attach" {
-  role       = module.incoming_data_lambda_function.role_name
+  role       = module.incoming_data_lambda_function.lambda_role_name
   policy_arn = data.aws_iam_policy.iam_msk_lambda_access.arn
 }

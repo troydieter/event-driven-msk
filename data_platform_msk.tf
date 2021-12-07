@@ -1,6 +1,5 @@
 # Locals
 locals {
-  server_properties = join("\n", [for k, v in var.server_properties : format("%s = %s", k, v)])
   enable_logs       = var.s3_logs_bucket != "" || var.cloudwatch_logs_group != "" || var.firehose_logs_delivery_stream != "" ? ["true"] : []
 }
 
