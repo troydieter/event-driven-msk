@@ -202,6 +202,12 @@ resource "aws_msk_cluster" "data_platform" {
     revision = aws_msk_configuration.data_platform.latest_revision
   }
 
+  client_authentication {
+    sasl {
+      iam = True
+    }
+  }
+
   encryption_info {
     encryption_at_rest_kms_key_arn = var.encryption_at_rest_kms_key_arn
 
