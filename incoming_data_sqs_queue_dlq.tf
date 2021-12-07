@@ -7,9 +7,5 @@ module "sqs_encrypted_incoming_data_dlq" {
   content_based_deduplication = true
   fifo_queue                  = true
 
-  tags = {
-    "project"     = "${lower("${var.aws-profile}")}-event-driven-msk"
-    "environment" = var.environment
-    "id"          = random_id.rando.hex
-  }
+  tags = local.common-tags
 }

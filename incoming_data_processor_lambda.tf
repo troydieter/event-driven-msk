@@ -30,11 +30,7 @@ module "incoming_data_lambda_function" {
 }
 EOF
 
-  tags = {
-    "project"     = "${lower("${var.aws-profile}")}-event-driven-msk"
-    "environment" = var.environment
-    "id"          = random_id.rando.hex
-  }
+  tags = local.common-tags
 
   environment_variables = {
     KAFKA_BROKER = aws_msk_cluster.data_platform.bootstrap_brokers_sasl_iam

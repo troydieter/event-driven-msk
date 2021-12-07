@@ -13,9 +13,5 @@ module "vpc" {
   enable_nat_gateway = true
   enable_vpn_gateway = true
 
-  tags = {
-    "project"     = "${lower("${var.aws-profile}")}-event-driven-msk"
-    "environment" = var.environment
-    "id"          = random_id.rando.hex
-  }
+  tags = local.common-tags
 }
