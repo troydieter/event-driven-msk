@@ -1,5 +1,5 @@
+from __future__ import print_function
 import json
-import time
 import os
 from time import time
 from confluent_kafka import Producer
@@ -17,15 +17,10 @@ kafka_producer = Producer({
 
 
 def handler(event, context):
-    for record in event['Records']:
-        payload = record["body"]
-        start_time = int(time() * 1000)
-
-        send_msg_async(str(payload))
-
-        end_time = int(time() * 1000)
-        time_taken = (end_time - start_time) / 1000
-        print("Time taken to complete = %s seconds" % time_taken)
+    print("Received event: " + json.dumps(event, indent=2))
+    payload = event['Records'][0]['Sns']['Message']
+    parsed_payload = json.loads(payload)
+    send_msg_async(str(payload))
 
 
 def delivery_report(err, msg):
