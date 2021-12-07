@@ -65,12 +65,6 @@ variable "prometheus_node_exporter" {
   default     = false
 }
 
-variable "server_properties" {
-  description = "A map of the contents of the server.properties file. Supported properties are documented in the [MSK Developer Guide](https://docs.aws.amazon.com/msk/latest/developerguide/msk-configuration-properties.html)."
-  type        = map(string)
-  default     = {}
-}
-
 variable "encryption_at_rest_kms_key_arn" {
   description = "You may specify a KMS key short ID or ARN (it will always output an ARN) to use for encrypting your data at rest. If no key is specified, an AWS managed KMS ('aws/msk' managed service) key will be used for encrypting the data at rest."
   type        = string
@@ -187,7 +181,10 @@ resource "aws_security_group_rule" "node_exporter" {
 resource "aws_msk_configuration" "data_platform" {
   kafka_versions    = [var.kafka_version]
   name              = "${var.cluster_name}-${var.environment}-${random_id.rando.hex}"
-  server_properties = local.server_properties
+  server_properties = <<PROPERTIES
+auto.create.topics.enable = true
+delete.topic.enable = true
+PROPERTIES
 
   lifecycle {
     create_before_destroy = true

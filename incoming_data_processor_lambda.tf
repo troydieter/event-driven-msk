@@ -4,7 +4,7 @@ module "incoming_data_lambda_function" {
   source = "terraform-aws-modules/lambda/aws"
 
   function_name = "incoming_data-processor-${var.environment}-${random_id.rando.hex}"
-  description   = "Subscribes to the incoming data SNS topic and processes it"
+  description   = "Subscribes to the incoming data SQS queue and processes it"
   handler       = "index.handler"
   runtime       = "python3.8"
 
@@ -35,5 +35,14 @@ EOF
     "environment" = var.environment
     "id"          = random_id.rando.hex
   }
+
+  environment_variables = {
+    KAFKA_BROKER = aws_msk_cluster.data_platform.bootstrap_brokers
+    KAFKA_TOPIC = "test"
+  }
+
+  depends_on = [
+    aws_msk_cluster.data_platform
+  ]
 
 }
