@@ -17,9 +17,11 @@ kafka_producer = Producer({
 
 
 def handler(event, context):
-    print("Received event: " + json.dumps(event, indent=2))
-    payload = event['Records'][0]['Sns']['Message']
-    send_msg_async(payload)
+    for record in event['Records']:
+        print("test")
+        payload = record["body"]
+        print(str(payload))
+        send_msg_async(payload)
 
 
 def delivery_report(err, msg):
