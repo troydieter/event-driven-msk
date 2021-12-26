@@ -3,8 +3,10 @@
 resource "aws_msk_scram_secret_association" "data_platform_secret_associate" {
   cluster_arn     = aws_msk_cluster.data_platform.arn
   secret_arn_list = [aws_secretsmanager_secret.data_platform_secret.arn]
-
-  depends_on = [aws_secretsmanager_secret_version.data_platform_secret]
+  depends_on = [
+      aws_secretsmanager_secret_version.data_platform_secret,
+      aws_msk_cluster.data_platform
+      ]
 }
 
 resource "aws_secretsmanager_secret" "data_platform_secret" {

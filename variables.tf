@@ -110,6 +110,6 @@ variable "firehose_logs_delivery_stream" {
 
 variable "cidr_blocks" {
   description = "Allowed CIDR block for ingress MSK traffic"
-  type = list
-  default = ["0.0.0.0/0"]
+  type        = list(any)
+  default     = ["0.0.0.0/0"]
 }
