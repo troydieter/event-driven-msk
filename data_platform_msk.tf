@@ -13,7 +13,7 @@ resource "aws_security_group_rule" "msk-plain" {
   protocol          = "tcp"
   security_group_id = aws_security_group.data_platform.id
   type              = "ingress"
-  self              = true
+  cidr_blocks = var.cidr_blocks
 }
 
 resource "aws_security_group_rule" "msk-tls" {
@@ -23,7 +23,7 @@ resource "aws_security_group_rule" "msk-tls" {
   protocol          = "tcp"
   security_group_id = aws_security_group.data_platform.id
   type              = "ingress"
-  self              = true
+  cidr_blocks = var.cidr_blocks
 }
 
 resource "aws_security_group_rule" "msk-iam" {
@@ -33,7 +33,7 @@ resource "aws_security_group_rule" "msk-iam" {
   protocol          = "tcp"
   security_group_id = aws_security_group.data_platform.id
   type              = "ingress"
-  self              = true
+  cidr_blocks = var.cidr_blocks
 }
 
 resource "aws_security_group_rule" "zookeeper-plain" {
@@ -43,7 +43,7 @@ resource "aws_security_group_rule" "zookeeper-plain" {
   protocol          = "tcp"
   security_group_id = aws_security_group.data_platform.id
   type              = "ingress"
-  self              = true
+  cidr_blocks = var.cidr_blocks
 }
 
 resource "aws_security_group_rule" "zookeeper-tls" {
@@ -53,7 +53,7 @@ resource "aws_security_group_rule" "zookeeper-tls" {
   protocol          = "tcp"
   security_group_id = aws_security_group.data_platform.id
   type              = "ingress"
-  self              = true
+  cidr_blocks = var.cidr_blocks
 }
 
 resource "aws_security_group_rule" "jmx-exporter" {
