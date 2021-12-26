@@ -118,7 +118,8 @@ resource "aws_msk_cluster" "data_platform" {
 
   client_authentication {
     sasl {
-      iam = true
+      iam   = true
+      scram = true
     }
   }
 
