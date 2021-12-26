@@ -27,6 +27,19 @@ resource "aws_kms_key" "incoming_data_kms_key" {
         "kms:Describe*"
       ],
       "Resource": "*"
+    },
+      {
+      "Effect": "Allow",
+      "Principal": {
+        "Service": [
+          "sns.amazonaws.com",
+          "sqs.amazonaws.com"
+        ] },
+      "Action": [
+        "kms:GenerateDataKey*",
+        "kms:Decrypt"
+      ],
+      "Resource": "*"
     }  
   ]
 }

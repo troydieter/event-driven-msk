@@ -15,3 +15,28 @@ module "sqs_encrypted_incoming_data" {
 
   tags = local.common-tags
 }
+
+resource "aws_sqs_queue_policy" "incoming_data" {
+  queue_url = module.sqs_encrypted_incoming_data.sqs_queue_id
+
+  policy = <<POLICY
+{
+  "Version": "2012-10-17",
+  "Id": "sqspolicy",
+  "Statement": [
+    {
+      "Sid": "AllowSNSSQS",
+      "Effect": "Allow",
+      "Principal": "*",
+      "Action": "sqs:SendMessage",
+      "Resource": "${module.sqs_encrypted_incoming_data.sqs_queue_arn}",
+      "Condition": {
+        "ArnEquals": {
+          "aws:SourceArn": "${module.sns_encrypted_incoming_data.sns_topic_arn}"
+        }
+      }
+    }
+  ]
+}
+POLICY
+}

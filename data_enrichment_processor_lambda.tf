@@ -47,6 +47,18 @@ module "data_platform_lambda_function" {
             "Resource": [
               "${aws_kms_key.data_enrichment_kms_key.arn}"
               ]
+        },
+        {
+            "Effect": "Allow",
+            "Action": [ 
+        "ec2:CreateNetworkInterface",
+        "ec2:DescribeNetworkInterfaces",
+        "ec2:DescribeVpcs",
+        "ec2:DeleteNetworkInterface",
+        "ec2:DescribeSubnets",
+        "ec2:DescribeSecurityGroups"
+      ],
+            "Resource": [ "*" ]
         }
     ]
 }
