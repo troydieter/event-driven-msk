@@ -7,6 +7,7 @@ module "data_platform_lambda_function" {
   description   = "Subscribes to the MSK stream and processes it"
   handler       = "index.handler"
   runtime       = "python3.8"
+  timeout       = 30
 
   source_path        = "./src/data-enrichment-processor-lambda"
   attach_policy_json = true
