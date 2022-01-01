@@ -1,7 +1,9 @@
 # Provisions the VPC for MSK
 
+# Exclude us-east-1e as MSK is not available there
 data "aws_availability_zones" "available" {
   state = "available"
+  exclude_zone_ids = ["${var.aws_region}e"]
 }
 
 resource "random_shuffle" "az" {
