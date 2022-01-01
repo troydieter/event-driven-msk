@@ -18,7 +18,16 @@ data "aws_ami" "amazon-linux-2" {
 
 locals {
   user_data = <<-EOF
-  #!/bin/bash
+
+#!/bin/bash
+yum -y update
+yum -y install git 
+yum install -y https://s3.us-east-1.amazonaws.com/amazon-ssm-us-east-1/latest/linux_amd64/amazon-ssm-agent.rpm
+systemctl enable amazon-ssm-agent
+systemctl start amazon-ssm-agent
+git clone https://github.com/aws-samples/amazon-msk-client-authentication.git /tmp/amazon-msk-client-authentication
+
+  
   EOF
 }
 
@@ -69,7 +78,7 @@ module "ec2_instance" {
   source  = "terraform-aws-modules/ec2-instance/aws"
   version = "~> 3.0"
 
-  name = "${random_id.rando.hex}-msk_client"
+  name = "msk-client-${random_id.rando.hex}"
 
   ami                         = data.aws_ami.amazon-linux-2.id
   instance_type               = "t3.small"

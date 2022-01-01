@@ -31,3 +31,4 @@ override.tf.json
 /builds
 /provider.tf
 remote_state.tf
+/*.pem*
