@@ -86,15 +86,27 @@ module "ec2_instance" {
   monitoring                  = true
   vpc_security_group_ids      = ["${aws_security_group.msk_client.id}"]
   subnet_id                   = module.vpc.public_subnets[0]
-  associate_public_ip_address = true
+  associate_public_ip_address = false
   iam_instance_profile        = aws_iam_instance_profile.msk_client_profile.name
   user_data_base64            = base64encode(local.user_data)
 
   tags = local.common-tags
 }
 
+resource "aws_eip" "msk_client" {
+  vpc = true
+
+  instance                  = module.ec2_instance.id
+  associate_with_private_ip = module.ec2_instance.private_ip
+  depends_on = [
+    module.vpc,
+    module.ec2_instance
+  ]
+  tags = local.common-tags
+}
+
 output "pubip" {
-  value       = module.ec2_instance.public_ip
+  value       = aws_eip.msk_client.public_ip
   description = "Public IP Address for the MSK Client"
 }
 
