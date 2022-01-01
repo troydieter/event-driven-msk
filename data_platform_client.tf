@@ -74,58 +74,6 @@ resource "aws_security_group_rule" "msk-client" {
   cidr_blocks       = var.cidr_blocks
 }
 
-# Permissions
-
-resource "aws_iam_instance_profile" "msk_client_profile" {
-  name = "msk_client-${random_id.rando.hex}_profile"
-  role = aws_iam_role.msk_client.name
-}
-
-resource "aws_iam_role" "msk_client" {
-  name = "msk_client-${random_id.rando.hex}_role"
-  path = "/"
-
-  assume_role_policy = <<EOF
-{
-    "Version": "2012-10-17",
-    "Statement": [
-        {
-            "Effect": "Allow",
-            "Action": [
-                "kafka-cluster:Connect",
-                "kafka-cluster:AlterCluster",
-                "kafka-cluster:DescribeCluster"
-            ],
-            "Resource": [
-                "${aws_msk_cluster.data_platform.arn}/*"
-            ]
-        },
-        {
-            "Effect": "Allow",
-            "Action": [
-                "kafka-cluster:*Topic*",
-                "kafka-cluster:WriteData",
-                "kafka-cluster:ReadData"
-            ],
-            "Resource": [
-                "${aws_msk_cluster.data_platform.arn}/*"
-            ]
-        },
-        {
-            "Effect": "Allow",
-            "Action": [
-                "kafka-cluster:AlterGroup",
-                "kafka-cluster:DescribeGroup"
-            ],
-            "Resource": [
-                "${aws_msk_cluster.data_platform.arn}/*"
-            ]
-        }
-    ]
-}
-EOF
-}
-
 module "ec2_instance" {
   source  = "terraform-aws-modules/ec2-instance/aws"
   version = "~> 3.0"
@@ -139,7 +87,7 @@ module "ec2_instance" {
   vpc_security_group_ids      = ["${aws_security_group.msk_client.id}"]
   subnet_id                   = module.vpc.public_subnets[0]
   associate_public_ip_address = true
-  iam_instance_profile        = aws_iam_instance_profile.msk_client_profile
+  iam_instance_profile        = aws_iam_instance_profile.msk_client_profile.name
   user_data_base64            = base64encode(local.user_data)
 
   tags = local.common-tags
