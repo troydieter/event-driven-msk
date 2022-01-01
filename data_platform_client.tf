@@ -82,3 +82,13 @@ module "ec2_instance" {
 
   tags = local.common-tags
 }
+
+output "pubip" {
+    value = module.ec2_instance.public_dns
+    description = "Public IP Address for the MSK Client"
+}
+
+output "clientarn" {
+    value = module.ec2_instance.arn
+    description = "ARN of the MSK Client"
+}
