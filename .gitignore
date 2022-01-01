@@ -33,3 +33,4 @@ override.tf.json
 remote_state.tf
 *.pem*
 /.idea
+.idea
