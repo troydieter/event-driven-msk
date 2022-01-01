@@ -10,8 +10,8 @@ resource "aws_msk_scram_secret_association" "data_platform_secret_associate" {
 }
 
 resource "aws_secretsmanager_secret" "data_platform_secret" {
-  name       = "AmazonMSK_secret_auth_${random_id.rando.hex}"
-  kms_key_id = aws_kms_key.data_platform_kms_key.key_id
+  name                    = "AmazonMSK_secret_auth_${random_id.rando.hex}"
+  kms_key_id              = aws_kms_key.data_platform_kms_key.key_id
   recovery_window_in_days = 0
 }
 
