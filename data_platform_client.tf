@@ -48,10 +48,10 @@ resource "aws_key_pair" "generated_key" {
   public_key = tls_private_key.client_key.public_key_openssh
 
   provisioner "local-exec" {
-    command = <<-EOT
+    command = <<EOT
       echo '${tls_private_key.client_key.private_key_pem}' > ./keys/'${var.generated_key_name}'.pem
       chmod 400 ./keys/'${var.generated_key_name}'.pem
-    EOT
+EOT
   }
 
 }
