@@ -80,15 +80,14 @@ module "ec2_instance" {
 
   name = "msk-client-${random_id.rando.hex}"
 
-  ami                         = data.aws_ami.amazon-linux-2.id
-  instance_type               = "t3.small"
-  key_name                    = var.generated_key_name
-  monitoring                  = true
-  vpc_security_group_ids      = ["${aws_security_group.msk_client.id}"]
-  subnet_id                   = module.vpc.public_subnets[0]
-  associate_public_ip_address = false
-  iam_instance_profile        = aws_iam_instance_profile.msk_client_profile.name
-  user_data_base64            = base64encode(local.user_data)
+  ami                    = data.aws_ami.amazon-linux-2.id
+  instance_type          = "t3.small"
+  key_name               = var.generated_key_name
+  monitoring             = true
+  vpc_security_group_ids = ["${aws_security_group.msk_client.id}"]
+  subnet_id              = module.vpc.public_subnets[0]
+  iam_instance_profile   = aws_iam_instance_profile.msk_client_profile.name
+  user_data_base64       = base64encode(local.user_data)
 
   tags = local.common-tags
 }
@@ -98,11 +97,17 @@ resource "aws_eip" "msk_client" {
 
   instance                  = module.ec2_instance.id
   associate_with_private_ip = module.ec2_instance.private_ip
+
   depends_on = [
     module.vpc,
     module.ec2_instance
   ]
-  tags = local.common-tags
+  tags = merge(
+    local.common-tags,
+    {
+      Name = "kafka-client-eip-${random_id.rando.hex}"
+    },
+  )
 }
 
 output "pubip" {
