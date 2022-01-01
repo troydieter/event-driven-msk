@@ -72,6 +72,6 @@ EOF
 
 resource "aws_iam_policy_attachment" "msk_client_policy_attach" {
   name       = "msk_client-${random_id.rando.hex}_policy_attach"
-  roles      = ["aws_iam_role.msk_client.name"]
+  roles      = ["${aws_iam_role.msk_client.name}"]
   policy_arn = aws_iam_policy.msk_client_policy.arn
 }
