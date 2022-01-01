@@ -10,6 +10,8 @@ module "s3_bucket" {
     enabled = true
   }
 
+  force_destroy = true
+
   tags = local.common-tags
 }
 
