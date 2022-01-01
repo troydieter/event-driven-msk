@@ -2,7 +2,7 @@
 
 # AMI Info
 data "aws_ami" "amazon-linux-2" {
-  owners = ["self"]
+  owners = ["amazon"]
   most_recent = true
 
   filter {
