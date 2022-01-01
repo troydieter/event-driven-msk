@@ -32,3 +32,4 @@ override.tf.json
 /provider.tf
 remote_state.tf
 *.pem*
+/.idea
