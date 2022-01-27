@@ -21,7 +21,7 @@ resource "aws_iam_role" "sns_topic_role" {
 
 resource "aws_iam_role_policy" "sns_topic_feedback" {
   name = "sns_feedback_policy-${random_id.rando.hex}"
-  role = aws_iam_role.sns_topic_role.arn
+  role = aws_iam_role.sns_topic_role.id
 
   policy = jsonencode({
     "Version" : "2012-10-17",
@@ -42,7 +42,6 @@ resource "aws_iam_role_policy" "sns_topic_feedback" {
     ]
   })
 
-  tags = local.common-tags
 }
 
 # Provisions the inbound data Amazon SNS Topic
