@@ -9,6 +9,10 @@ module "incoming_data_lambda_function" {
   runtime       = "python3.8"
   timeout       = 30
   source_path   = "./src/incoming-data-processor-lambda"
+  environment_variables = {
+    "bucket_name" = module.s3_bucket.s3_bucket_bucket_domain_name
+    "rando_id" = random_id.rando.hex
+  }
 
   attach_policy_json = true
   policy_json        = <<EOF
@@ -26,18 +30,35 @@ module "incoming_data_lambda_function" {
               "${module.sqs_encrypted_incoming_data.sqs_queue_arn}"
               ]
         },
-                {
+        {
             "Effect": "Allow",
-            "Action": [ 
-        "kms:Encrypt*",
-        "kms:Decrypt*",
-        "kms:ReEncrypt*",
-        "kms:GenerateDataKey*",
-        "kms:Describe*"
+              "Action": [
+              "kms:Encrypt*",
+              "kms:Decrypt*",
+              "kms:ReEncrypt*",
+              "kms:GenerateDataKey*",
+              "kms:Describe*"
       ],
             "Resource": [
               "${aws_kms_key.incoming_data_kms_key.arn}"
               ]
+        },
+      {
+            "Effect": "Allow",
+              "Action": [
+              "s3:*"
+      ],
+            "Resource": [
+              "${module.s3_bucket.s3_bucket_arn}",
+              "${module.s3_bucket.s3_bucket_arn}/*"
+              ]
+        },
+      {
+            "Effect": "Allow",
+              "Action": [
+              "s3:List*"
+      ],
+            "Resource": "*"
         }
     ]
 }

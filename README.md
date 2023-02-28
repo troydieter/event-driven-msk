@@ -1,4 +1,4 @@
-# Event-Driven Amazon MSK
+# Event-Driven Architecture
 Event Driven Architecture on AWS
 * SNS 
 * SQS
