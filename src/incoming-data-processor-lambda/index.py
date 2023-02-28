@@ -17,9 +17,10 @@ def handler(event, context):
 
     for record in event['Records']:
         s3 = boto3.resource('s3')
-        s3_bucket_name = os.environ['BUCKET_NAME']
-        file_name = f"event_{rando_id}_{dt}.csv"
+        s3_bucket_name = bucket_name
+        file_name = f"event_{rando_id}_{dt}.json"
         folder_path = f"{dt}"
-        s3.Bucket(s3_bucket_name).put_object(Bucket=s3_bucket_name, Key=file_name, Body=record["body"])
+        s3.Bucket(s3_bucket_name).put_object(Bucket=s3_bucket_name, Key=f"{folder_path}/{file_name}",
+                                             ContentType="application/json", Body=record["body"])
         payload = record["body"]
         print(str(payload))

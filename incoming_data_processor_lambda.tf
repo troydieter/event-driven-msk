@@ -10,7 +10,7 @@ module "incoming_data_lambda_function" {
   timeout       = 30
   source_path   = "./src/incoming-data-processor-lambda"
   environment_variables = {
-    "BUCKET_NAME" = module.s3_bucket.s3_bucket_bucket_domain_name
+    "BUCKET_NAME" = module.s3_bucket.s3_bucket_id
     "RANDO_ID" = random_id.rando.hex
   }
 
