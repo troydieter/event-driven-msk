@@ -10,8 +10,8 @@ module "incoming_data_lambda_function" {
   timeout       = 30
   source_path   = "./src/incoming-data-processor-lambda"
   environment_variables = {
-    "bucket_name" = module.s3_bucket.s3_bucket_bucket_domain_name
-    "rando_id" = random_id.rando.hex
+    "BUCKET_NAME" = module.s3_bucket.s3_bucket_bucket_domain_name
+    "RANDO_ID" = random_id.rando.hex
   }
 
   attach_policy_json = true

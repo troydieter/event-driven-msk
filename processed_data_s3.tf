@@ -8,4 +8,6 @@ module "s3_bucket" {
     enabled = true
   }
 
+  tags = local.common-tags
+
 }
