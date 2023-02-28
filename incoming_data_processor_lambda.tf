@@ -11,7 +11,7 @@ module "incoming_data_lambda_function" {
   source_path   = "./src/incoming-data-processor-lambda"
   environment_variables = {
     "BUCKET_NAME" = module.s3_bucket.s3_bucket_id
-    "RANDO_ID" = random_id.rando.hex
+    "RANDO_ID"    = random_id.rando.hex
   }
 
   attach_policy_json = true
